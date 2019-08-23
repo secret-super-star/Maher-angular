@@ -18,6 +18,7 @@ export class AddUserComponent implements OnInit {
 
   user: User = new User();
   userRoles: Array<Role> = [];
+  countrylist: Array<Role> = [];
   userRequest: UserRequest = new UserRequest();
   userError: UserError = new UserError();  
   showProgress: boolean = false;
@@ -29,12 +30,23 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit() {    
     this.getRoles();
+    this.getCountry();
   }
 
   getRoles() {
     this.client.roles().subscribe(
       (response) => { 
         this.userRoles = response;        
+      }
+    );
+  }
+
+  getCountry() {
+    alert()
+    this.client.country().subscribe(
+      (response) => { 
+        this.countrylist = response;        
+        console.log(response)      
       }
     );
   }

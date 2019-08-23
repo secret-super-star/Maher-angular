@@ -11,6 +11,7 @@ import { Role } from '../models/user/role';
 export class UserClient extends BaseClient {    
     public static readonly BASE_ENDPOINT = Constants.API_BASE_URL + '/users';
     public static readonly ADMIN_ENDPOINT = Constants.API_BASE_URL + '/users/admins';
+    public static readonly COUNTRY_ENDPOINT = Constants.API_BASE_URL + '/country';
     
     public list(): Observable<UserListResponse> {
         return this.authService.getToken().pipe(switchMap((token) => {            
@@ -52,6 +53,12 @@ export class UserClient extends BaseClient {
     public roles(): Observable<Array<Role>> {
         return this.authService.getToken().pipe(switchMap((token) => {            
             return this.http.get<Array<Role>>(UserClient.BASE_ENDPOINT + '/roles', {headers: this.getHeaders(token)});
+        }));
+    }
+
+    public country(): Observable<Array<Role>> {
+        return this.authService.getToken().pipe(switchMap((token) => {            
+            return this.http.get<Array<Role>>(UserClient.COUNTRY_ENDPOINT, {headers: this.getHeaders(token)});
         }));
     }
 
