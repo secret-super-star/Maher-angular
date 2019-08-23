@@ -1,0 +1,54 @@
+<div class="row">
+        <div class="col-md-12">
+            <nb-card>
+                <nb-card-header>Edit Review</nb-card-header>
+                <nb-card-body [nbSpinner]="showProgress" nbSpinnerStatus="danger">
+                    <form (ngSubmit)="updateReview()" #form="ngForm">                            
+                        <div class="form-group">
+                                <label for="status">User <i class="fa fa-eye icon-link" (click)="goToUser()"></i></label>
+                                <input class="form-control" [value]="review.user.email" readonly />
+                        </div>       
+                        <div class="form-group">
+                                <label for="status">Provider <i class="fa fa-eye icon-link" (click)="goToProvider()"></i></label>
+                                <input class="form-control" [value]="review.provider.user.email" readonly />
+                        </div>   
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input  class="form-control" [value]="review.created_at" readonly/>                     
+                        </div>    
+
+                        <div class="form-group">
+                            <label for="rating">Rate</label>
+                            <input class="form-control" id="rating" placeholder="Rate" name="rating" [(ngModel)]="reviewRequest.rating" #rating=ngModel required />
+                            <label [hidden]="rating.valid"
+                                    class="error text-danger">
+                                    Rate is required
+                            </label>                                       
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="review">Review</label>
+                            <input class="form-control" id="reviewtxt" placeholder="Review" name="review" [(ngModel)]="reviewRequest.review" #reviewtxt=ngModel required />
+                            <label [hidden]="reviewtxt.valid"
+                                    class="error text-danger">
+                                    Review is required
+                            </label>                                       
+                        </div>
+                        <div class="form-group">
+                            <label>Actived</label>
+                            <nb-checkbox class="form-control" [value]="reviewRequest.active" (change)="onIsActivedChange($event.target.checked)">Is Review Actived?</nb-checkbox>                                
+                        </div>                                                                       
+                                                                                                             
+                        <button type="submit" [disabled]="!form.form.valid" nbButton status="primary" size="medium" 
+                        [nbSpinner]="showProgressButton" nbSpinnerStatus="primary" nbSpinnerSize="small" nbSpinnerMessage="Updating">
+                            Update
+                        </button>
+                        &nbsp;
+                        <button nbButton status="danger" size="medium" (click)="back()">
+                            Back
+                        </button>
+                    </form>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>

@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>Edit User</nb-card-header>
+            <nb-card-body [nbSpinner]="showProgress" nbSpinnerStatus="danger">
+                <form (ngSubmit)="updateUser()" #form="ngForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Name" name="name" [(ngModel)]="userRequest.name" #name=ngModel required>
+                        <label [hidden]="name.valid || name.pristine"
+                                class="error text-danger">
+                            Name is required
+                        </label>
+                        <label class="error text-danger" *ngFor="let error of userError.name">{{error}}</label>                        
+                    </div>                                    
+                    <div class="form-group">
+                        <label for="name">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email" name="email" [(ngModel)]="userRequest.email" #email=ngModel required>
+                        <label [hidden]="email.valid || email.pristine"
+                                class="error text-danger">
+                            Email is invalid
+                        </label>
+                        <label class="error text-danger" *ngFor="let error of userError.email">{{error}}</label>                        
+                    </div>                                    
+                    <div class="form-group">
+                        <label for="mobile_number">Mobile Number</label>
+                        <input type="mobile_number" class="form-control" id="v" placeholder="Mobile Number" name="mobile_number" [(ngModel)]="userRequest.mobile_number" #mobile_number=ngModel required>
+                        <label [hidden]="mobile_number.valid || mobile_number.pristine"
+                                class="error text-danger">
+                            Mobile Number is invalid
+                        </label>
+                        <label class="error text-danger" *ngFor="let error of userError.mobile_number">{{error}}</label>                        
+                    </div>                                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="password" [(ngModel)]="userRequest.password" #password=ngModel>
+                        <label [hidden]="password.valid || password.pristine"
+                                class="error text-danger">
+                            Password is required
+                        </label>
+                        <label class="error text-danger" *ngFor="let error of userError.password">{{error}}</label>                        
+                    </div>                                                        
+                    <div class="form-group">
+                        <label for="roles">Roles</label>
+                        <select name="roles" class="form-control" [(ngModel)]="userRequest.role" #roles=ngModel [compareWith]="compareRole">
+                            <option *ngFor="let userRole of userRoles" [value]="userRole.id">{{ userRole.name }}</option>
+                        </select>                        
+                        <label class="error text-danger" *ngFor="let error of userError.role">{{error}}</label>                        
+                    </div>          
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" class="form-control" id="image" placeholder="Image" name="image" #image=ngModel [(ngModel)]="userRequest.image">                        
+                        <label class="error text-danger" *ngFor="let error of userError.image">{{error}}</label>
+                    </div>             
+                    <div class="form-group">
+                        <label>Actived</label>
+                        <nb-checkbox class="form-control" [value]="userRequest.active" (change)="onIsActivedChange($event.target.checked)">Is User Actived?</nb-checkbox>                                
+                    </div>                       
+                    <button type="submit" [disabled]="!form.form.valid" nbButton status="primary" size="medium" 
+                    [nbSpinner]="showProgressButton" nbSpinnerStatus="primary" nbSpinnerSize="small" nbSpinnerMessage="Updating">
+                        Update
+                    </button>
+                    &nbsp;
+                    <button nbButton status="danger" size="medium" (click)="back()">
+                        Back
+                    </button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>Edit Category</nb-card-header>
+            <nb-card-body [nbSpinner]="showProgress" nbSpinnerStatus="danger">
+                <form (ngSubmit)="updateCategory()" #form="ngForm">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" placeholder="Title" name="title" [(ngModel)]="categoryRequest.title" #title=ngModel required>
+                        <label [hidden]="title.valid || title.pristine"
+                                class="error text-danger">
+                            Title is required
+                        </label>
+                        <label class="error text-danger" *ngFor="let error of categoryError.title">{{error}}</label>                        
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" class="form-control" id="image" placeholder="Image" name="image" (change)="onFileChanged($event)">                        
+                        <a [href]="category.image_url">{{ category.image_url }}</a>
+                        <label class="error text-danger" *ngFor="let error of categoryError.image">{{error}}</label>
+                    </div>     
+                    <div class="form-group">
+                        <label for="secondary_image">Secondary Image</label>
+                        <input type="file" class="form-control" id="image" placeholder="Image" name="secondary_image" (change)="onSecondaryFileChanged($event)">                        
+                        <a [href]="category.secondary_image_url">{{ category.secondary_image_url }}</a>
+                        <label class="error text-danger" *ngFor="let error of categoryError.secondary_image">{{error}}</label>
+                    </div>     
+                    <div class="form-group">
+                        <label for="parent_id">Parent Category</label>
+                        <select name="parent_id" class="form-control" [(ngModel)]="categoryRequest.parent_id" #parent_id=ngModel>
+                            <option *ngFor="let primaryCategory of primaryCategories" [value]="primaryCategory.id">{{ primaryCategory.title }}</option>
+                        </select>                        
+                        <label class="error text-danger" *ngFor="let error of categoryError.parent_id">{{error}}</label>                        
+                    </div>                              
+                    <button type="submit" [disabled]="!form.form.valid" nbButton status="primary" size="medium" 
+                    [nbSpinner]="showProgressButton" nbSpinnerStatus="primary" nbSpinnerSize="small" nbSpinnerMessage="Updating">
+                        Update
+                    </button>
+                    &nbsp;
+                    <button nbButton status="danger" size="medium" (click)="back()">
+                        Back
+                    </button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<nb-card>
+  <nb-card-header>
+    Users <a [href]="exportLink" class="primary float-lg-right" status="primary" size="small">Export All</a>
+  </nb-card-header>      
+  
+  <nb-card-body [nbSpinner]="loading" nbSpinnerStatus="danger">    
+    <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDeleteConfirm($event)" (edit)="edit($event)">
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

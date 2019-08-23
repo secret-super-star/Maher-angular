@@ -1,0 +1,119 @@
+<div class="row">
+        <div class="col-md-12">
+            <nb-card>
+                <nb-card-header>Edit Provider</nb-card-header>
+                <nb-card-body [nbSpinner]="showProgress" nbSpinnerStatus="danger">
+                    <form (ngSubmit)="updateProvider()" #form="ngForm">    
+                        <div class="form-group">
+                            <label>Mark check if profile is verified</label>
+                            <nb-checkbox class="form-control" [value]="providerRequest.is_verified" (change)="onIsVerifiedChange($event.target.checked)">Is Profile Verified?</nb-checkbox>                                
+                        </div>                                                                      
+                        <div class="form-group">
+                            <label for="primary_category_id">Primary Category</label>
+                            <select name="primary_category_id" class="form-control" [(ngModel)]="providerRequest.primary_category_id" #primary_category_id=ngModel (change)="onPrimaryCategoryChange($event.target.value)">
+                                <option *ngFor="let providerCategory of providerCategories" [value]="providerCategory.id">{{ providerCategory.title }}</option>
+                            </select>                        
+                            <label class="error text-danger" *ngFor="let error of providerError.primary_category_id">{{error}}</label>                        
+                        </div>                                  
+                        <div class="form-group">
+                            <label for="sub_categories">Sub Categories</label>
+                            <select name="sub_categories" multiple class="form-control" [(ngModel)]="providerRequest.sub_categories" #sub_categories=ngModel [compareWith]="compareSubcategory" required>
+                                <option *ngFor="let providerSubCategory of providerSubCategories" [value]="providerSubCategory">{{ providerSubCategory.title }}</option>
+                            </select>                      
+                            <label [hidden]="sub_categories.valid || price.pristine"
+                                    class="error text-danger">
+                                    Select Subcategory
+                            </label>  
+                            <label class="error text-danger" *ngFor="let error of providerError.sub_categories">{{error}}</label>                        
+                        </div>     
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="file" class="form-control" id="image" placeholder="Image" name="image"  (change)="onFileChanged($event)">                        
+                            <a [href]="provider.image_url">{{ provider.image_url }}</a>
+                            <label class="error text-danger" *ngFor="let error of providerError.image">{{error}}</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="document">Document</label>
+                            <input type="file" class="form-control" id="document" placeholder="Document" name="document" #document=ngModel [(ngModel)]="providerRequest.document">                        
+                            <a [href]="provider.document_url">{{ provider.document_url }}</a>
+                            <label class="error text-danger" *ngFor="let error of providerError.document">{{error}}</label>
+                        </div>   
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input class="form-control" id="price" placeholder="Price" name="price" [(ngModel)]="providerRequest.price" #price=ngModel required />
+                            <label [hidden]="price.valid || price.pristine"
+                                    class="error text-danger">
+                                    Price is required
+                            </label>
+                            <label class="error text-danger" *ngFor="let error of providerError.price">{{error}}</label>                        
+                        </div> 
+                        <div class="form-group">
+                            <label for="price_type">Price Type(e.g. visit, hour)</label>
+                            <input class="form-control" id="price_type" placeholder="Enter visit or hour" name="price_type" [(ngModel)]="providerRequest.price_type" #price_type=ngModel required />
+                            <label [hidden]="price_type.valid || price_type.pristine"
+                                    class="error text-danger">
+                                    Price Type is required
+                            </label>
+                            <label class="error text-danger" *ngFor="let error of providerError.price">{{error}}</label>                        
+                        </div> 
+                        <div class="form-group">
+                            <label for="about">About</label>
+                            <textarea class="form-control" id="about" placeholder="About" name="about" [(ngModel)]="providerRequest.about" #about=ngModel required></textarea>
+                            <label [hidden]="about.valid || about.pristine"
+                                    class="error text-danger">
+                                About is required
+                            </label>
+                            <label class="error text-danger" *ngFor="let error of providerError.about">{{error}}</label>                        
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <textarea class="form-control" id="address" placeholder="Address" name="address" [(ngModel)]="providerRequest.address" #address=ngModel required></textarea>
+                            <label [hidden]="address.valid || address.pristine"
+                                    class="error text-danger">
+                                    Address is required
+                            </label>
+                            <label class="error text-danger" *ngFor="let error of providerError.address">{{error}}</label>                        
+                        </div>
+                        <div class="form-group">
+                            <label for="latitude">Latitude</label>
+                            <input class="form-control" id="latitude" placeholder="Latitude" name="latitude" [(ngModel)]="providerRequest.latitude" #latitude=ngModel required />
+                            <label [hidden]="latitude.valid || latitude.pristine"
+                                    class="error text-danger">
+                                    Latitude is required
+                            </label>
+                            <label class="error text-danger" *ngFor="let error of providerError.latitude">{{error}}</label>                        
+                        </div> 
+                        <div class="form-group">
+                            <label for="longitude">Longitude</label>
+                            <input class="form-control" id="longitude" placeholder="Longitude" name="longitude" [(ngModel)]="providerRequest.longitude" #longitude=ngModel required />
+                            <label [hidden]="longitude.valid || longitude.pristine"
+                                    class="error text-danger">
+                                    Longitude is required
+                            </label>
+                            <label class="error text-danger" *ngFor="let error of providerError.longitude">{{error}}</label>                        
+                        </div>   
+                        <div class="form-group">
+                            <label>Actived</label>
+                            <nb-checkbox class="form-control" [value]="providerRequest.active" (change)="onIsActivedChange($event.target.checked)">Is User Actived?</nb-checkbox>                                
+                        </div> 
+                        <!-- <div class="form-group">
+                            <label for="plan_id">Plan</label>
+                            <select name="plan_id" class="form-control" [(ngModel)]="providerRequest.plan_id" #plan_id=ngModel>
+                                <option>Select</option>
+                                <option *ngFor="let plan of plans" [value]="plan.id">{{ plan.name }}</option>
+                            </select>                        
+                            <label class="error text-danger" *ngFor="let error of providerError.plan_id">{{error}}</label>                        
+                        </div>                      -->
+                        <button type="submit" [disabled]="!form.form.valid" nbButton status="primary" size="medium" 
+                        [nbSpinner]="showProgressButton" nbSpinnerStatus="primary" nbSpinnerSize="small" nbSpinnerMessage="Updating">
+                            Update
+                        </button>
+                        &nbsp;
+                        <button nbButton status="danger" size="medium" (click)="back()">
+                            Back
+                        </button>
+                    </form>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>

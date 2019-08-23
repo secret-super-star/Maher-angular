@@ -1,0 +1,10 @@
+<nb-card>
+    <nb-card-header>
+            Country <a href="javascript:;" class="primary float-lg-right" status="primary" size="small" routerLink="/pages/settings/country/add">Add Country</a>
+    </nb-card-header>      
+
+    <nb-card-body [nbSpinner]="loading" nbSpinnerStatus="danger">    
+            <ng2-smart-table [settings]="settings" [source]="source" (delete)="onDeleteConfirm($event)" (edit)="edit($event)">
+                </ng2-smart-table>
+    </nb-card-body>
+</nb-card>
