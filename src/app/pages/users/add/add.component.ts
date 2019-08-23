@@ -42,11 +42,10 @@ export class AddUserComponent implements OnInit {
   }
 
   getCountry() {
-    alert()
     this.client.country().subscribe(
-      (response) => { 
-        this.countrylist = response;        
-        console.log(response)      
+      (response) => {
+        console.log(response['data']) ;
+        this.countrylist = response['data'];     
       }
     );
   }

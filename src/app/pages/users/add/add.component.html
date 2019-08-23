@@ -50,8 +50,8 @@
                     
                     <div class="form-group">
                         <label for="roles">Country</label>
-                        <select name="roles" class="form-control" [(ngModel)]="userRequest.role" #roles=ngModel [compareWith]="compareRole">
-                            <option *ngFor="let userRole of userRoles" [value]="userRole.id">{{ userRole.name }}</option>
+                        <select name="roles" class="form-control" [(ngModel)]="userRequest.country" #roles=ngModel [compareWith]="compareRole">
+                            <option *ngFor="let country of countrylist" [value]="country.id">{{ country.country }} - {{country.currency}}</option>
                         </select>                        
                         <label class="error text-danger" *ngFor="let error of userError.role">{{error}}</label>                        
                     </div>  

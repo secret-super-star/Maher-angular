@@ -7,5 +7,6 @@ export class UserRequest {
     mobile_number: string;
     password: string;
     role: string;
+    country: string;
     active: number;
 }
