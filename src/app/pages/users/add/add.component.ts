@@ -59,6 +59,7 @@ export class AddUserComponent implements OnInit {
     formData.append('mobile_number', this.userRequest.mobile_number);
     formData.append('password', this.userRequest.password);    
     formData.append('role', this.userRequest.role);
+    formData.append('country', this.userRequest.country);
 
     if(this.userRequest.image) {
       formData.append('image', this.userRequest.image);
